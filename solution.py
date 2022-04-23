@@ -123,9 +123,7 @@ def get_route(hostname):
                 headerBuf = struct.calcsize("bbHHh")
                 recvdHeader = recvPacket[20:20 + headerBuf]
                 types = recvdHeader[0]
-                print(types)
                 
-
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
@@ -141,13 +139,14 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 +
                     bytes])[0]
-                    print(timeSent)
+                    rtt = str(timeReceived - timeSent)
+                    
                     
 
                     
                     #Fill in start
                     #You should add your responses to your lists here
-                    tracelist1.extend([str(ttl),'rtt', str(destAddr), routerName])
+                    tracelist1.extend([str(ttl), rtt , str(destAddr), routerName])
                     tracelist2.append(tracelist1)
                    
                     #Fill in end
@@ -155,7 +154,9 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
-                    #You should add your responses to your lists here 
+                    #You should add your responses to your lists here
+                    tracelist1.extend([str(ttl), rtt , str(destAddr), routerName])
+                    tracelist2.append(tracelist1) 
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
